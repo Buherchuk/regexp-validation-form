@@ -4,43 +4,44 @@ let lastNameFlag = false;
 let passwordFlag = false;
 
 function createErrorElement(location){
-    if(location.nextElementSibling.className != 'error'){
-        let div = document.createElement('div');
-        div.classList.add('error');
-        div.innerText = `Please provide a valid  ${location.placeholder}`;
-        location.after(div);
-        return true;
-    }else{
-        return false;
-    }
-}
-function removeErrorElement(location){
-    if(location.nextElementSibling.className == 'error'){
-        location.nextElementSibling.remove();
-        console.log('error element removed');
-        return true;
-    }else{
-    if(location.nextElementSibling.className != 'error'){
-        let div = document.createElement('div');
-        div.classList.add('error');
-        div.innerText = `Please provide a valid  ${location.placeholder}`;
-        location.after(div);
-        console.log('error element created');
-        return true;
-    }
-    }
-}
-document.querySelector('#privacy').onchange = function(){
-    if (emailFlag && firstNameFlag && lastNameFlag && passwordFlag){
-        removeErrorElement(document.querySelector('#privacy'));
-        let button = document.querySelector('#signIn');
-        button.disabled = false;
-        button.style.backgroundColor = "mediumseagreen";
-    }else{
-        if(document.querySelector('#privacy').nextElementSibling.className != 'error'){
+    if(location.id != 'privacy'){
+        if(location.nextElementSibling.className != 'error'){
             let div = document.createElement('div');
             div.classList.add('error');
-            div.innerText = 'Please fill all fields below';
+            div.innerText = `Please provide a valid  ${location.placeholder}`;
+            location.after(div);
+        }
+    }    
+}
+function removeErrorElement(location) {
+    if (location.id != 'privacy') {
+        if (location.nextElementSibling.className == 'error') {
+            location.nextElementSibling.remove();
+        } else {
+            if (location.nextElementSibling.className != 'error') {
+                let div = document.createElement('div');
+                div.classList.add('error');
+                div.innerText = `Please provide a valid  ${location.placeholder}`;
+                location.after(div);
+            }
+        }
+    }
+}
+document.querySelector('#privacy').onchange = function(e){
+    if (document.querySelector('#privacy').checked && emailFlag && firstNameFlag && lastNameFlag && passwordFlag){
+        document.querySelector('#signIn').disabled = false;
+        document.querySelector('#signIn').style.backgroundColor = "mediumseagreen";
+        if(document.querySelector('#privacy').nextElementSibling.className == 'error'){
+            e.target.nextElementSibling.remove();
+        }
+    }else if(!document.querySelector('#privacy').checked || !emailFlag || !firstNameFlag || !lastNameFlag || !passwordFlag){
+        document.querySelector('#signIn').disabled = true;
+        document.querySelector('#signIn').style.backgroundColor = "gray";
+        let div = document.createElement('div');
+        div.classList.add('error');
+        if(document.querySelector('#privacy').nextElementSibling.className != 'error'){            
+            div.classList.add('error');
+            div.innerText = 'This field is required';
             document.querySelector('#privacy').after(div);
         }
     }
@@ -51,41 +52,60 @@ document.forms.signUp.onchange = function (e) {
     let firstName = /^[a-zA-Z]{1,20}$/;
     let lastName = /^[a-zA-Z]{1,20}$/;
     let password = /^[a-zA-Z0-9]{8,15}$/;
-
     if (targ.id == 'email'){
-        if (email.test(targ.value) && targ.nextElementSibling.className == 'error'){
+        if (email.test(targ.value)){
             emailFlag = true;
-            removeErrorElement(targ);
-        }else if(!email.test(targ.value) && targ.nextElementSibling.className != 'error'){
+            if(targ.nextElementSibling.className == 'error'){
+                removeErrorElement(targ);
+            }
+            
+        }else{
             emailFlag = false;
-            createErrorElement(targ);
+            if(targ.nextElementSibling.className != 'error'){
+                createErrorElement(targ);
+            }
+            
         }
     }else if (targ.id == 'firstName'){
-        if (firstName.test(targ.value) && targ.nextElementSibling.className == 'error'){
-            firstNameFlag = true;            
-            removeErrorElement(targ);
-        }else if(!firstName.test(targ.value) && targ.nextElementSibling.className != 'error'){
+        if (firstName.test(targ.value)){
+            firstNameFlag = true;
+            if(targ.nextElementSibling.className == 'error'){
+                removeErrorElement(targ);
+            }    
+        }else{
             firstNameFlag = false;
-            createErrorElement(targ);
+            if(targ.nextElementSibling.className != 'error'){
+                createErrorElement(targ);
+            }
         }
     }else if (targ.id == 'lastName'){
-        if (lastName.test(targ.value) && targ.nextElementSibling.className == 'error'){
+        if (lastName.test(targ.value)){
             lastNameFlag = true;
-            removeErrorElement(targ);
-        }else if(!lastName.test(targ.value) && targ.nextElementSibling.className != 'error'){
+            if(targ.nextElementSibling.className == 'error'){
+                removeErrorElement(targ);
+            }
+        }else{
             lastNameFlag = false;
-            createErrorElement(targ);
+            if(targ.nextElementSibling.className != 'error'){
+                createErrorElement(targ);
+            }
         }
     }else if (targ.id == 'password'){
-        if (password.test(targ.value) && targ.nextElementSibling.className == 'error'){
+        if (password.test(targ.value)){
             passwordFlag = true;
-            removeErrorElement(targ);
-        }else if(!password.test(targ.value) && targ.nextElementSibling.className != 'error'){
+            if(targ.nextElementSibling.className == 'error'){
+                removeErrorElement(targ);
+            }
+        }else{
             passwordFlag = false;
-            createErrorElement(targ);
+            if(targ.nextElementSibling.className != 'error'){
+                createErrorElement(targ);
+            }
         }
-    }else {
-        return;
+    }
+    if (emailFlag && firstNameFlag && lastNameFlag && passwordFlag){
+        document.querySelector('#privacy').disabled = false;
+        removeErrorElement(document.querySelector('#privacy'));
     }
 }
 
