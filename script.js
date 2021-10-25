@@ -11,7 +11,7 @@ function createErrorElement(location){
             div.innerText = `Please provide a valid  ${location.placeholder}`;
             location.after(div);
         }
-    }    
+    }
 }
 function removeErrorElement(location) {
     if (location.id != 'privacy') {
@@ -46,6 +46,27 @@ document.querySelector('#privacy').onchange = function(e){
         }
     }
 }
+document.querySelector('#signIn').onclick = function(){
+    if(document.querySelector('#privacy').checked && emailFlag && firstNameFlag && lastNameFlag && passwordFlag){
+        document.querySelector('.successful-login').style.display = 'flex';
+    }    
+}
+document.querySelector('#exploring').onclick = function(){
+    emailFlag = false;
+    firstNameFlag = false;
+    lastNameFlag = false;
+    passwordFlag = false;
+    document.querySelector('.successful-login').style.display = 'none';
+    document.querySelector('#firstName').value = '';
+    document.querySelector('#lastName').value = '';
+    document.querySelector('#email').value = '';
+    document.querySelector('#password').value = '';
+    document.querySelector('#signIn').disabled = true;
+    document.querySelector('#signIn').style.backgroundColor = "gray";
+    document.querySelector('#privacy').disabled = true;
+
+}
+
 document.forms.signUp.onchange = function (e) {
     let targ = e.target;
     let email = /^[A-Za-z]*@/;

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>L-20</title>
     <link rel="stylesheet" href="./style.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
 </head>
 <body>
     <div class="wrapper">
@@ -17,7 +18,16 @@
             <label><input type="checkbox" id="privacy" disabled><span>I agree with Privacy Policy.</span></label>
             <input type="submit" value="signIn" id="signIn" disabled>
         </form>
-        
+        <div class="successful-login">
+            <div class="top-block">
+                <i class="far fa-check-circle"></i>
+            </div>
+            <div class="bottom-block">
+                <span class="header-text">Great!</span>
+                <span class="main-text">Your accaunt has been created successfully</span>
+                <input type="button" id="exploring" value="Start Exploring">
+            </div>
+        </div>
     </div>
     <script src="./script.js"></script>
 </body>
