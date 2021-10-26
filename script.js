@@ -3,6 +3,8 @@ let firstNameFlag = false;
 let lastNameFlag = false;
 let passwordFlag = false;
 
+let success = document.querySelector('.successful-login');
+
 function createErrorElement(location){
     if(location.id != 'privacy'){
         if(location.nextElementSibling.className != 'error'){
@@ -46,9 +48,9 @@ document.querySelector('#privacy').onchange = function(e){
         }
     }
 }
-document.querySelector('#signIn').onclick = function(){
-    if(document.querySelector('#privacy').checked && emailFlag && firstNameFlag && lastNameFlag && passwordFlag){
-        document.querySelector('.successful-login').style.display = 'flex';
+document.querySelector('#signIn').onclick = function(){    
+    if(emailFlag && firstNameFlag && lastNameFlag && passwordFlag){
+        success.style.display = "flex";
     }    
 }
 document.querySelector('#exploring').onclick = function(){
@@ -64,7 +66,7 @@ document.querySelector('#exploring').onclick = function(){
     document.querySelector('#signIn').disabled = true;
     document.querySelector('#signIn').style.backgroundColor = "gray";
     document.querySelector('#privacy').disabled = true;
-
+    document.querySelector('#privacy').checked = false;
 }
 
 document.forms.signUp.onchange = function (e) {
